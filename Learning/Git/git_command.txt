@@ -1,0 +1,25 @@
+GIT≥£”√÷∏¡Ó:
+
+git config
+
+git config --global user.name "name"
+git config --global user.email "email"
+
+git clone <GIT REMOT URL>
+
+git branch
+
+git checkout <branch name>
+
+git pull
+
+git merge <branch name>
+
+git add .
+
+git commit -m "log message"
+
+git push
+
+git  reset --hard <commit_id>
+
