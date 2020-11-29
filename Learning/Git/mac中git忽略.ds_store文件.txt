@@ -1,29 +1,3 @@
-GIT常用指令:
-
-git config
-
-git config --global user.name "name"
-git config --global user.email "email"
-
-git clone <GIT REMOT URL>
-
-git branch
-
-git checkout <branch name>
-
-git pull
-
-git merge <branch name>
-
-git add .
-
-git commit -m "log message"
-
-git push
-
-git  reset --hard <commit_id>
-
-
 mac中git忽略.ds_store文件
 
 
@@ -47,4 +21,3 @@ $ touch ~/.gitignore_global
 
 $ git config --global core.excludesfile ~/.gitignore_global
 这样就不用每个git目录都设置忽略.DS_Store文件了！
-
