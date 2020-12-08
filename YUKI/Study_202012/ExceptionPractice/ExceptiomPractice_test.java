@@ -21,7 +21,7 @@ public class ExceptiomPractice_test {
        try{
            i++; //i自增为2,传递给i,i=2;
            System.out.println("try block, i = "+i);//打印出try block, i = 2; 
-           //没有发生异常系,所以不执行30-32行代码;
+           //没有发生异常系,所以不执行25-28行代码;
        }catch(Exception e){
            i ++;
            System.out.println("catch block i = "+i);
