@@ -1,0 +1,205 @@
+<html>
+<head>
+<title>顶呱呱牌计算器~</title>
+<script src="file:///Users/xuexue/Desktop/calculator.html"
+	type="text/javascript"></script>
+<style>
+.cites { /*类选择器*/
+	background-color: white;
+	color: black;
+	height: 30;
+	width: 30;
+	text-align: center;
+}
+
+.buttonNum {
+	background-color: #A9A9A9; /*灰色*/
+	color: black;
+	width: 100%;
+	height: 30;
+	text-align: center;
+}
+
+.buttonSymbol {
+	background-color: #FFD700; /*黄色*/
+	color: black;
+	width: 100%;
+	height: 30;
+	text-align: center;
+}
+
+.buttonSymbol2 {
+	background-color: #FFFFE0; /*肉色*/
+	color: black;
+	width: 100%;
+	height: 30;
+	text-align: center;
+}
+
+.buttonDel {
+	background-color: #E9967A; /*玫瑰干枯色*/
+	color: black;
+	width: 100%;
+	height: 30;
+	text-align: center;
+}
+</style>
+<script type="text/javascript">
+	String.prototype.replaceAll = function(s1, s2) {
+		return this.replace(new RegExp(s1, "gm"), s2);
+	}
+	var valStr = "";
+	//显示为0的function
+	function inputValue(val) {
+		var txt = document.getElementById("result");
+		//alert(txt);
+		valStr += val;
+		if (valStr.substring(0, 1) == '0') {
+			valStr = valStr.substring(1);
+		}
+		var showExpression = valStr;
+		showExpression = showExpression.replaceAll("/", "÷");
+		showExpression = showExpression.replaceAll("\\*", "×");
+		txt.innerHTML = showExpression;
+	}
+
+	function del() {
+		valStr = valStr.substring(0, valStr.length - 1);
+		inputValue("");
+	}
+
+	function showResult() {
+		try {
+			var ret = eval(valStr);
+			//alert("Result:" + eval(prompt("Enter an expression:", "")));
+			valStr = "";
+			inputValue(ret);
+			valStr="";
+		}
+
+		catch (exception) {
+			alert(exception);
+		}
+	}
+
+	function showZero() {
+		var txt = document.getElementById("result");
+		txt.innerHTML = '0';
+		valStr = "";
+	}
+</script>
+</head>
+<body>
+
+	<h1 align="center">顶呱呱牌计算器</h1>
+	<br>
+	<hr>
+	<div></div>
+	<!--结果显示栏-->
+
+	<!--数字运算符输入栏-->
+	<table border="1" align="center">
+		<tr border="1" height="30" width="150" align="center">
+			<td colspan="4"><button
+					style="height: 30; width: 100%; text-align: left" id="result"></button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center"><button class="buttonSymbol2"
+					onclick="showZero()">
+					<b>AC</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('%')">
+					<b>%</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('/')">
+					<b>÷</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('*')">
+					<b>×</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(7)">
+					<b>7</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(8)">
+					<b>8</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(9)">
+					<b>9</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('+')">
+					<b>+</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(4)">
+					<b>4</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(5)">
+					<b>5</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(6)">
+					<b>6</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('-')">
+					<b>-</b>
+				</button></td>
+		<tr>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(1)">
+					<b>1</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(2)">
+					<b>2</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(3)">
+					<b>3</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue(')')">
+					<b>)</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center"><button class="buttonDel"
+					onclick="del()">
+					<b>DEL</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue('.')">
+					<b>.</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(0)">
+					<b>0</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('(')">
+					<b>(</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td colspan="4"><button
+					style="font-size: 20px; text-align:center;height: 30; width: 100%; background: url(等号.png) no-repeat 30px 30px"
+					onclick="showResult()">
+					<b>=</b>
+				</button></td>
+		</tr>
+	</table>
+	<hr />
+</body>
+</html>
