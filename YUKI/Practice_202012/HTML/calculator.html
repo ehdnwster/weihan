@@ -1,94 +1,168 @@
-<!DOCTYPE html>
 <html>
 <head>
 <title>顶呱呱牌计算器~</title>
-<script src="file:///Users/xuexue/Desktop/calculator.html" type="text/javascript"></script>
-</head>
-<body>
+<script src="file:///Users/xuexue/Desktop/calculator.html"
+	type="text/javascript"></script>
 <style>
-.class{            /*类选择器*/
-background-color: white;
-color: black;
-height: 30;
-width: 30;
-text-align:center;
+.cites { /*类选择器*/
+	background-color: white;
+	color: black;
+	height: 30;
+	width: 30;
+	text-align: center;
 }
 </style>
-<h1 align="center">顶呱呱牌计算器</h1>　<br>
-<hr>
-<div>
 <script type="text/javascript">
-var a="";
-var str=new Array();//保留输入字符数组
+	String.prototype.replaceAll = function(s1, s2) {
+		return this.replace(new RegExp(s1, "gm"), s2);
+	}
+	var valStr = "";
+	//显示为0的function
+	function inputValue(val) {
+		var txt = document.getElementById("result");
+		//alert(txt);
+		valStr += val;
+		if (valStr.substring(0, 1) == '0') {
+			valStr = valStr.substring(1);
+		}
+		var showExpression = valStr;
+		showExpression = showExpression.replaceAll('/', "÷");
+		//showExpression = showExpression.replaceAll('\*', "×");
+		txt.innerHTML = showExpression;
+	}
 
-//显示数字function
-var showNumber()={
-var relt=document.getElementById()
-}
+	function del() {
+		valStr = valStr.substring(0, valStr.length - 1);
+		inputValue("");
+	}
 
-//显示运算结果function
-var showResult()={}
+	function showResult() {
+		try {
+			var ret = eval(valStr);
+			//alert("Result:" + eval(prompt("Enter an expression:", "")));
+			valStr = "";
+			inputValue(ret);
+		}
 
-//显示为0的function
-var showZero()={
-document.getElementById("result").innerHTML="0";}
+		catch (exception) {
+			alert(exception);
+		}
+	}
 
+	function showZero() {
+		var txt = document.getElementById("result");
+		txt.innerHTML = '0';
+		valStr = "";
+	}
+</script>
+</head>
+<body>
 
-//显示加法function
-var showAdd()={}
-
-//显示减法function
-var showSubtract()={}
-
-//显示乘法的function
-var showMultiply()={}
-
-//显示出发的function
-var showDivide()={}
-
-//显示百分号的function
-var showPercent()={}
-
-</script></div>
-<!--结果显示栏-->
-<table border="1" height="30" width="155" align="center">
-<tr><td id="result"></td></tr>
-</table>
-<!--数字运算符输入栏-->
-<table border="1"align="center">
-  <tr >
-  <td cites="class" align="center"><button onclick="showZero()"><b>AC</b></button></td>
-  <td cites="class" align="center"><button onclick="showPercent()"><b>%</b></button></td>
-  <td cites="class" align="center"><button onclick="showAdd"><b>÷</b></button></td>
-  <td cites="class" align="center"><button onclick="showDivide"><b>×</b></button></td>
-  </tr>
-  <tr>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>7</b></button></td>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>8</b></button></td>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>9</b></button></td>
-  <td cites="class" align="center"><button onclick="showAdd()"><b>+</b></button></td>
-  </tr>
-  <tr>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>4</b></button></td>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>5</b></button></td>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>6</b></button></td>
-  <td cites="class" align="center"><button onclick="showSubtract()"><b>-</b></button></td>
-  <tr>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>1</b></button></td>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>2</b></button></td>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>3</b></button></td>
-  <td cites="class" align="center"><button onclick="showResult"><b>)</b></button></td>
-  </tr>
-  <tr>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>DEL</b></button></td>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>.</b></button></td>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>0</b></button></td>
-  <td cites="class" align="center" id="num"><button onclick="showNumber()"><b>(</b></button></td>
-  </tr>
-  </table>
-<hr/>
+	<h1 align="center">顶呱呱牌计算器</h1>
+	<br>
+	<hr>
+	<div></div>
+	<!--结果显示栏-->
+	<table border="1" height="30" width="150" align="center">
+		<tr>
+			<td><div id="result"></div></td>
+		</tr>
+	</table>
+	<!--数字运算符输入栏-->
+	<table border="1" align="center">
+		<tr>
+			<td class="cites" align="center"><button onclick="showZero()">
+					<b>AC</b>
+				</button></td>
+			<td class="cites" align="center"><button
+					onclick="inputValue('%')">
+					<b>%</b>
+				</button></td>
+			<td class="cites" align="center"><button
+					onclick="inputValue('/')">
+					<b>÷</b>
+				</button></td>
+			<td class="cites" align="center"><button
+					onclick="inputValue('*')">
+					<b>×</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(7)">
+					<b>7</b>
+				</button></td>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(8)">
+					<b>8</b>
+				</button></td>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(9)">
+					<b>9</b>
+				</button></td>
+			<td class="cites" align="center"><button
+					onclick="inputValue('+')">
+					<b>+</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(4)">
+					<b>4</b>
+				</button></td>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(5)">
+					<b>5</b>
+				</button></td>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(6)">
+					<b>6</b>
+				</button></td>
+			<td class="cites" align="center"><button
+					onclick="inputValue('-')">
+					<b>-</b>
+				</button></td>
+		<tr>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(1)">
+					<b>1</b>
+				</button></td>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(2)">
+					<b>2</b>
+				</button></td>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(3)">
+					<b>3</b>
+				</button></td>
+			<td class="cites" align="center"><button
+					onclick="inputValue(')')">
+					<b>)</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center" id="num"><button
+					onclick="del()">
+					<b>DEL</b>
+				</button></td>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue('.')">
+					<b>.</b>
+				</button></td>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue(0)">
+					<b>0</b>
+				</button></td>
+			<td class="cites" align="center" id="num"><button
+					onclick="inputValue('(')">
+					<b>(</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td colspan="4"><button style="width: 100%"
+					onclick="showResult()">=</button></td>
+		</tr>
+	</table>
+	<hr />
 </body>
 </html>
-
-<!--好难🤯 脑袋已经宕机 明早JS部分继续填坑~~~!-->
-
