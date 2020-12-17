@@ -12,7 +12,7 @@
 	text-align: center;
 }
 
-.buttonNum {
+.buttonNum { /*数字按钮属性配置*/
 	background-color: #A9A9A9; /*灰色*/
 	color: black;
 	width: 100%;
@@ -20,7 +20,7 @@
 	text-align: center;
 }
 
-.buttonSymbol {
+.buttonSymbol { /*运算符的按钮属性配置*/
 	background-color: #FFD700; /*黄色*/
 	color: black;
 	width: 100%;
@@ -28,7 +28,7 @@
 	text-align: center;
 }
 
-.buttonSymbol2 {
+.buttonSymbol2 { /*清空按钮属性配置*/
 	background-color: #FFFFE0; /*肉色*/
 	color: black;
 	width: 100%;
@@ -36,8 +36,8 @@
 	text-align: center;
 }
 
-.buttonDel {
-	background-color: #E9967A; /*玫瑰干枯色*/
+.buttonDel { /*删除按钮属性配置*/
+	background-color: #E9967A; /*干枯玫瑰色*/
 	color: black;
 	width: 100%;
 	height: 30;
@@ -45,47 +45,48 @@
 }
 </style>
 <script type="text/javascript">
-	String.prototype.replaceAll = function(s1, s2) {
-		return this.replace(new RegExp(s1, "gm"), s2);
+	String.prototype.replaceAll = function(s1, s2) { //给String类封装一个“replaeAll”的新的方法,参数为是s1,s2;
+		return this.replace(new RegExp(s1, "gm"), s2); //return关键字返回结果,即this关键字代表的replace方法输出s2替换正则表达式后的s1;
 	}
 	var valStr = "";
-	//显示为0的function
+	//显示为值的function;
 	function inputValue(val) {
-		var txt = document.getElementById("result");
+		var txt = document.getElementById("result"); //获取到“result”属性的标签,并将此标签赋值给txt变量;
 		//alert(txt);
-		valStr += val;
-		if (valStr.substring(0, 1) == '0') {
-			valStr = valStr.substring(1);
+		valStr += val; //js全局变量valStr接收输入的内容;
+		if (valStr.substring(0, 1) == '0') { //键入的值第一位是否为0的判断;
+			valStr = valStr.substring(1); //最终输出的内容为第二位直至最后一位值,将首位值0截取掉;
 		}
-		var showExpression = valStr;
-		showExpression = showExpression.replaceAll("/", "÷");
-		showExpression = showExpression.replaceAll("\\*", "×");
-		txt.innerHTML = showExpression;
+		var showExp = valStr; //定义新的变量,并将valStr的值赋予新变量;
+		showExp = showExp.replaceAll("/", "÷"); //采用replaceAll方法,将数式中的所有计算机符号‘/’替换为人类数学符号‘÷’并在显示框中正常显示;
+		showExp = showExp.replaceAll("\\*", "×"); //采用replaceAll方法将计算机符号‘*’替换为人类数学符号‘×’,期间将乘号‘*’使用‘/’转义,转义前将‘/’将‘/’先转义(二次转义);
+		txt.innerHTML = showExp;//txt所代表的标签.其输出内容为上面新定义的showExp;
 	}
-
+	//Del键功能实现的function;
 	function del() {
-		valStr = valStr.substring(0, valStr.length - 1);
-		inputValue("");
+		valStr = valStr.substring(0, valStr.length - 1);//valStr变量被赋值为此时valStr第一位到倒数第二位的值,即将刚刚键入的值利用substring方法截取掉;
+		inputValue("");//调用inputValue()方法,变量为空值,valStr += val数式将输出67行截掉最后一位的valStr值;
 	}
-
+	//进行数学运算的function;
 	function showResult() {
+		//try/catch进行异常系的捕捉;
 		try {
-			var ret = eval(valStr);
+			var ret = eval(valStr); //定义新的变量ret,接收数学运算的结果;
 			//alert("Result:" + eval(prompt("Enter an expression:", "")));
-			valStr = "";
-			inputValue(ret);
-			valStr="";
+			valStr = "";//将目前的valStr值清零,否则将会将上一次的运算结果一起输出;
+			inputValue(ret);//调用inputValue()方法,参数为数学运算结果的接收变量ret;
+			valStr = "";//再次将当前valStr值清零,不影响下次运算;
 		}
 
 		catch (exception) {
-			alert(exception);
+			alert(exception);//如果当前运算不可以进行,将以popup的形式弹出异常系内容;
 		}
 	}
-
+	//AC键的功能实现function;
 	function showZero() {
-		var txt = document.getElementById("result");
-		txt.innerHTML = '0';
-		valStr = "";
+		var txt = document.getElementById("result");//定义新的变量txt,并将含有“result”属性的标签作为一个标签赋值给txt;
+		txt.innerHTML = '0';//变量txt处打印出数字0;
+		valStr = "";//将此时的valStr值清零,不影响接下来的运算;
 	}
 </script>
 </head>
@@ -95,14 +96,13 @@
 	<br>
 	<hr>
 	<div></div>
-	<!--结果显示栏-->
-
-	<!--数字运算符输入栏-->
 	<table border="1" align="center">
+		<!--结果显示栏-->
 		<tr border="1" height="30" width="150" align="center">
 			<td colspan="4"><button
 					style="height: 30; width: 100%; text-align: left" id="result"></button></td>
 		</tr>
+		<!--数字运算符输入栏-->
 		<tr>
 			<td class="cites" align="center"><button class="buttonSymbol2"
 					onclick="showZero()">
@@ -194,7 +194,7 @@
 		</tr>
 		<tr>
 			<td colspan="4"><button
-					style="font-size: 20px; text-align:center;height: 30; width: 100%; background: url(等号.png) no-repeat 30px 30px"
+					style="font-size: 20px; text-align: center; height: 30; width: 100%; background: url(等号.png) no-repeat 30px 30px"
 					onclick="showResult()">
 					<b>=</b>
 				</button></td>
