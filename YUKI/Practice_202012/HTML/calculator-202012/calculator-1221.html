@@ -1,0 +1,255 @@
+<html>
+<head>
+<title>顶呱呱牌计算器~</title>
+<script src="/Users/xuexue/eclipse-workspace/Study_202011_202012/src/html/calculator.html"
+	type="text/javascript"></script>
+<style>
+.cites { /*类选择器*/
+	background-color: white;
+	color: black;
+	height: 30;
+	width: 30;
+	text-align: center;
+}
+
+.buttonNum { /*数字按钮属性配置*/
+	background-color: #A9A9A9; /*灰色*/
+	color: black;
+	width: 100%;
+	height: 30;
+	text-align: center;
+}
+
+.buttonSymbol { /*运算符的按钮属性配置*/
+	background-color: #FFD700; /*黄色*/
+	color: black;
+	width: 100%;
+	height: 30;
+	text-align: center;
+}
+
+.buttonSymbol2 { /*清空按钮属性配置*/
+	background-color: #FFFFE0; /*肉色*/
+	color: black;
+	width: 100%;
+	height: 30;
+	text-align: center;
+}
+
+.buttonDel { /*删除按钮属性配置*/
+	background-color: #E9967A; /*干枯玫瑰色*/
+	color: black;
+	width: 100%;
+	height: 30;
+	text-align: center;
+}
+
+.his { /*HTR,DSH键属性*/
+	background-color: #A0522D; /*土黄赭*/
+	color: white;
+	width: 60;
+	height: 30;
+	text-align: center;
+	font-size: 5;
+	width: 60;
+}
+
+.htr { /*历史计算信息的属性*/
+	background-color: white;
+	color: black;
+	text-align: left;
+	/*display: none;*/
+	width: 100%;
+	height: 60;
+}
+</style>
+<script type="text/javascript">
+	String.prototype.replaceAll = function(s1, s2) { //给String类封装一个“replaeAll”的新的方法,参数为是s1,s2;
+		return this.replace(new RegExp(s1, "gm"), s2); //return关键字返回结果,即this关键字代表的replace方法输出s2替换正则表达式后的s1;
+	}
+	var valStr = "";
+	var showHtr = "";
+
+	//显示为值的function;
+	function inputValue(val) {
+		var txt = document.getElementById("result"); //获取到“result”属性的标签,并将此标签赋值给txt变量;
+		//alert(txt);
+		valStr += val; //js全局变量valStr接收输入的内容;
+		if (valStr.substring(0, 1) == '0') { //键入的值第一位是否为0的判断;
+			valStr = valStr.substring(1); //最终输出的内容为第二位直至最后一位值,将首位值0截取掉;
+		}
+		showExp = valStr; //定义新的变量,并将valStr的值赋予新变量;
+		showExp = showExp.replaceAll("/", "÷"); //采用replaceAll方法,将数式中的所有计算机符号‘/’替换为人类数学符号‘÷’并在显示框中正常显示;
+		showExp = showExp.replaceAll("\\*", "×"); //采用replaceAll方法将计算机符号‘*’替换为人类数学符号‘×’,期间将乘号‘*’使用‘/’转义,转义前将‘/’将‘/’先转义(二次转义);
+		txt.innerHTML = showExp;//txt所代表的标签.其输出内容为上面新定义的showExp;
+	}
+	//Del键功能实现的function;
+	function del() {
+		valStr = valStr.substring(0, valStr.length - 1);//valStr变量被赋值为此时valStr第一位到倒数第二位的值,即将刚刚键入的值利用substring方法截取掉;
+		inputValue("");//调用inputValue()方法,变量为空值,valStr += val数式将输出67行截掉最后一位的valStr值;
+	}
+	//进行数学运算的function;
+	function showResult() {
+		//try/catch进行异常系的捕捉;
+		try {
+			var ret = eval(valStr); //定义新的变量ret,接收数学运算的结果;
+			//alert("Result:" + eval(prompt("Enter an expression:", "")));
+			showHtr += valStr + "=" + ret + ";";//历史计算信息依次叠加,被保存到showHtr变量中 -20201221追加;
+			valStr = "";//将目前的valStr值清零,否则将会将上一次的运算结果一起输出;
+			inputValue(ret);//调用inputValue()方法,参数为数学运算结果的接收变量ret;
+			valStr = "";//再次将当前valStr值清零,不影响下次运算;
+		}
+
+		catch (exception) {
+			alert(exception);//如果当前运算不可以进行,将以popup的形式弹出异常系内容;
+		}
+	}
+	//AC键的功能实现function;
+	function showZero() {
+		var txt = document.getElementById("result");//定义新的变量txt,并将含有“result”属性的标签作为一个标签赋值给txt;
+		txt.innerHTML = '0';//变量txt处打印出数字0;
+		valStr = "";//将此时的valStr值清零,不影响接下来的运算;
+	}
+	//显示历史计算信息功能;
+	function showHistory(showHtr) {
+		var htr = document.getElementById("showHtr");//通过getElmentById方法获取“showHtr”属性的标签,并将此标签赋值给变量htr;
+		//showHtr = showHtr.replaceAll("/", "÷"); //采用replaceAll方法在此无法正常替换,会再次打磨这个细节!!! -20201221
+		//showHtr = showHtr.replaceAll("*", "×"); //采用replaceAll方法在此无法正常替换,会再次打磨这个细节!!! -20201221
+		htr.innerHTML = showHtr;//在htr标签处输出showHtr的值,即历史计算信息;
+	}
+	//隐藏历史计算信息功能;
+	function DspHistory(showHtr) {
+		var htr = document.getElementById("showHtr");//通过getElementById方法获取属性为“showHtr”的标签,并将此标签赋值给变量htr;
+		//showHtr = showHtr.replaceAll("/", "÷"); //采用replaceAll方法在此无法正常替换,会再次打磨这个细节!!! -20201221
+		//showHtr = showHtr.replaceAll("*", "×"); //采用replaceAll方法在此无法正常替换,会再次打磨这个细节!!! -20201221
+		htr.innerHTML = "";//在htr标签处输出空,即历史计算信息隐藏;
+	}
+</script>
+</head>
+<body>
+
+	<h1 align="center">顶呱呱牌计算器</h1>
+	<br>
+	<hr>
+	<div></div>
+	<table border="1" align="center">
+		<!--结果显示栏-->
+		<tr border="1" height="30" width="150" align="center">
+			<td colspan="4"><button
+					style="height: 30; width: 100%; text-align: left" id="result"></button></td>
+		</tr>
+		<!--141行到231行,为数字运算符输入栏-->
+		<tr>
+			<td class="cites" align="center"><button class="buttonSymbol2"
+					onclick="showZero()">
+					<b>AC</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('%')">
+					<b>%</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('/')">
+					<b>÷</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('*')">
+					<b>×</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(7)">
+					<b>7</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(8)">
+					<b>8</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(9)">
+					<b>9</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('+')">
+					<b>+</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(4)">
+					<b>4</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(5)">
+					<b>5</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(6)">
+					<b>6</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('-')">
+					<b>-</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(1)">
+					<b>1</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(2)">
+					<b>2</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(3)">
+					<b>3</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue(')')">
+					<b>)</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="cites" align="center"><button class="buttonDel"
+					onclick="del()">
+					<b>DEL</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue('.')">
+					<b>.</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonNum"
+					onclick="inputValue(0)">
+					<b>0</b>
+				</button></td>
+			<td class="cites" align="center"><button class="buttonSymbol"
+					onclick="inputValue('(')">
+					<b>(</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td colspan="3" rowspan="2"><button
+					style="font-size: 20px; text-align: center; height: 35; width: 100%; background: url(等号.png) no-repeat 30px 30px"
+					onclick="showResult()">
+					<b>=</b>
+				</button></td>
+			<td><button style="width: 100%; height: 15; text-align: center"
+					class="his" onclick="showHistory(showHtr)">
+					<b>HTR</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td><button style="width: 100%; height: 15; text-align: center"
+					class="his" onclick="DspHistory(showHtr)">
+					<b>DSH</b>
+				</button></td>
+		</tr>
+		<tr>
+			<td class="htr" colspan="4" id="showHtr"><b></b></td>
+		</tr>
+	</table>
+	<hr />
+</body>
+</html>
